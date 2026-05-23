@@ -4,6 +4,7 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, isToolUIPart, getToolName, type UIMessage } from "ai";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import ApplicationForm from "./ApplicationForm";
+import MarkdownRenderer from "./MarkdownRenderer";
 import type { Template, TemplateField } from "@/types";
 
 const transport = new DefaultChatTransport({ api: "/api/chat" });
@@ -249,9 +250,9 @@ export default function ChatInterface() {
                   return (
                     <div
                       key={i}
-                      className="bg-gray-100 text-gray-800 rounded-2xl rounded-bl-md px-4 py-2 max-w-[75%] whitespace-pre-wrap text-sm"
+                      className="bg-gray-100 text-gray-800 rounded-2xl rounded-bl-md px-4 py-2 max-w-[75%] text-sm"
                     >
-                      {seg.text}
+                      <MarkdownRenderer content={seg.text} />
                     </div>
                   );
                 }
@@ -266,8 +267,8 @@ export default function ChatInterface() {
                     if (data?.question && data?.options) {
                       return (
                         <div key={i} className="flex flex-col gap-2 max-w-[85%]">
-                          <div className="bg-gray-100 text-gray-800 rounded-2xl rounded-bl-md px-4 py-2 text-sm whitespace-pre-wrap">
-                            {data.question}
+                          <div className="bg-gray-100 text-gray-800 rounded-2xl rounded-bl-md px-4 py-2 text-sm">
+                            <MarkdownRenderer content={data.question} />
                           </div>
                           <div className="flex flex-wrap gap-2">
                             {data.options.map((opt) => (
