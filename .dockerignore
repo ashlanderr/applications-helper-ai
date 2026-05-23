@@ -1,0 +1,14 @@
+.git
+.gitignore
+.idea
+.kilo
+.next
+node_modules
+.env
+.env.local
+.env.example
+docker-compose.yml
+docker-compose.override.yml
+docker
+README.md
+tsconfig.tsbuildinfo

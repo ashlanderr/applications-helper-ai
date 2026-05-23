@@ -1,7 +1,3 @@
-CREATE DATABASE applications_db;
-
-\connect applications_db;
-
 DROP TABLE IF EXISTS applications;
 DROP TABLE IF EXISTS employees;
 DROP TABLE IF EXISTS templates;

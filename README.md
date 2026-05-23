@@ -38,12 +38,12 @@ git clone <repo-url> && cd applications-helper-ai
 npm install
 
 # 3. Скопируйте переменные окружения
-cp .env.example .env.local
+cp .env.example .env
 
-# 4. Отредактируйте .env.local — вставьте ваш Anthropic API ключ
+# 4. Отредактируйте .env — вставьте ваш Anthropic API ключ
 
 # 5. Запустите PostgreSQL через Docker
-docker compose up -d
+docker compose up -d db
 
 # 6. Запустите приложение
 npm run dev
@@ -66,9 +66,9 @@ psql -U postgres -d applications_db -f docker/init.sql
 npm install
 
 # 4. Скопируйте переменные окружения
-cp .env.example .env.local
+cp .env.example .env
 
-# 5. Отредактируйте .env.local
+# 5. Отредактируйте .env
 
 # 6. Запустите приложение
 npm run dev
@@ -196,7 +196,7 @@ applications-helper-ai/
 
 ## Переменные окружения
 
-Переменные задаются в файле `.env.local` (создайте из `.env.example`):
+Переменные задаются в файле `.env` (создайте из `.env.example`):
 
 | Переменная | Описание | Пример |
 |------------|----------|--------|
