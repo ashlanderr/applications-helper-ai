@@ -29,6 +29,11 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: anthropic("claude-sonnet-4-6"),
+    providerOptions: {
+      anthropic: {
+        thinking: { type: "enabled", budgetTokens: 10_000 },
+      },
+    },
     system: SYSTEM_PROMPT + userPrompt,
     messages: await convertToModelMessages(messages),
     tools: agentTools,
