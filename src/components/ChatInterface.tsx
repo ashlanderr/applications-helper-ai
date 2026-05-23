@@ -205,13 +205,12 @@ export default function ChatInterface() {
               <div className="flex flex-wrap justify-center gap-2">
                 {[
                   "Покажи мои заявки",
-                  "Какие заявки были на прошлой неделе?",
                   "Создай заявку на доступ к ресурсу",
-                  "Какие таблицы есть в базе?",
+                  "Создай заявку на отпуск",
                 ].map((example) => (
                   <button
                     key={example}
-                    onClick={() => setInput(example)}
+                    onClick={() => handleOptionClick(example)}
                     className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors"
                   >
                     {example}
