@@ -184,6 +184,11 @@ export default function ChatInterface() {
 
   const isLoading = status === "streaming" || status === "submitted";
 
+  function handleOptionClick(value: string) {
+    if (isLoading) return;
+    sendMessage({ text: value });
+  }
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -252,6 +257,47 @@ export default function ChatInterface() {
                 }
 
                 if (seg.type === "tool") {
+                  if (seg.toolName === "ask_user") {
+                    const askOutput = seg.toolOutput as { question?: string; options?: { value: string; label?: string }[] } | undefined;
+                    const askInput = seg.toolInput as { question?: string; options?: { value: string; label?: string }[] } | undefined;
+                    const data = askOutput || askInput;
+                    const isPending = seg.toolState !== "output-available";
+
+                    if (data?.question && data?.options) {
+                      return (
+                        <div key={i} className="flex flex-col gap-2 max-w-[85%]">
+                          <div className="bg-gray-100 text-gray-800 rounded-2xl rounded-bl-md px-4 py-2 text-sm whitespace-pre-wrap">
+                            {data.question}
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {data.options.map((opt) => (
+                              <button
+                                key={opt.value}
+                                onClick={() => handleOptionClick(opt.value)}
+                                disabled={isLoading}
+                                className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                              >
+                                {opt.label || opt.value}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div key={i} className="flex flex-col gap-2">
+                        <ToolCallBlock
+                          label={seg.toolLabel!}
+                          input={seg.toolInput}
+                          output={seg.toolOutput}
+                          resultLabel={null}
+                          isPending={isPending}
+                        />
+                      </div>
+                    );
+                  }
+
                   const resultLabel = seg.toolOutput
                     ? getToolResultLabel(seg.toolName!, seg.toolOutput)
                     : null;

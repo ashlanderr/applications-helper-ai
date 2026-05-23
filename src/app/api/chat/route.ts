@@ -1,4 +1,4 @@
-import { streamText, UIMessage, convertToModelMessages } from "ai";
+import { streamText, UIMessage, convertToModelMessages, hasToolCall, stepCountIs } from "ai";
 import { anthropic } from "@ai-sdk/anthropic";
 import { auth } from "@/lib/auth/config";
 import { SYSTEM_PROMPT } from "@/lib/ai/prompts";
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     system: SYSTEM_PROMPT + userPrompt,
     messages: await convertToModelMessages(messages),
     tools: agentTools,
-    stopWhen: ({ steps }) => steps.length >= 16,
+    stopWhen: [stepCountIs(16), hasToolCall("ask_user")],
     onFinish: async () => {},
   });
 

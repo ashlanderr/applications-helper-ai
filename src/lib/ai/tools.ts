@@ -155,9 +155,29 @@ export const submitApplicationTool = tool({
   },
 });
 
+export const askUserTool = tool({
+  description:
+    "Ask the user a question when the answer should be one of several known options. Present the options as buttons for easy selection. Use this instead of asking open-ended questions when the options are limited and predefined.",
+  inputSchema: z.object({
+    question: z.string().describe("The question to ask the user"),
+    options: z
+      .array(
+        z.object({
+          value: z.string().describe("The option value (what gets sent as the answer)"),
+          label: z.string().optional().describe("Optional display label if different from value"),
+        })
+      )
+      .describe("Available options for the user to choose from"),
+  }),
+  execute: async ({ question, options }) => {
+    return { question, options };
+  },
+});
+
 export const agentTools = {
   pg_query: pgQueryTool,
   pg_list_tables: pgListTablesTool,
   pg_describe_table: pgDescribeTableTool,
   submit_application: submitApplicationTool,
+  ask_user: askUserTool,
 };
