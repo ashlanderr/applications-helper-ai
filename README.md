@@ -32,7 +32,7 @@ AI-чатбот для корпоративных сотрудников ком�
 
 ```bash
 # 1. Клонируйте репозиторий
-git clone <repo-url> && cd application-helper-sql
+git clone <repo-url> && cd applications-helper-ai
 
 # 2. Установите зависимости
 npm install
@@ -96,7 +96,7 @@ npm run dev
 ## Структура проекта
 
 ```
-application-helper-sql/
+applications-helper-ai/
 ├── docker/
 │   └── init.sql              # SQL-схема + мок-данные
 ├── src/
