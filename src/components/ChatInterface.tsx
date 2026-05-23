@@ -271,9 +271,9 @@ export default function ChatInterface() {
                             <MarkdownRenderer content={data.question} />
                           </div>
                           <div className="flex flex-wrap gap-2">
-                            {data.options.map((opt) => (
+                            {data.options.map((opt, idx) => (
                               <button
-                                key={opt.value}
+                                key={idx}
                                 onClick={() => handleOptionClick(opt.value)}
                                 disabled={isLoading}
                                 className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
