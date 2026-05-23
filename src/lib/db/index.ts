@@ -44,12 +44,17 @@ export async function executeReadOnly(
 
   const client = await getPool().connect();
   try {
+    await client.query("BEGIN");
     await client.query("SET TRANSACTION READ ONLY");
     await client.query(`SET statement_timeout = ${QUERY_TIMEOUT_MS}`);
     const result = await client.query({ text: sql, values: params });
+    await client.query("COMMIT");
     const rows = result.rows as Record<string, unknown>[];
     const limited = rows.slice(0, MAX_ROWS);
     return { rows: limited, rowCount: result.rowCount ?? rows.length };
+  } catch (err) {
+    await client.query("ROLLBACK");
+    throw err;
   } finally {
     await client.query("SET statement_timeout = 0");
     client.release();
@@ -62,12 +67,17 @@ export async function executeReadOnlyParameterized(
 ): Promise<{ rows: Record<string, unknown>[]; rowCount: number }> {
   const client = await getPool().connect();
   try {
+    await client.query("BEGIN");
     await client.query("SET TRANSACTION READ ONLY");
     await client.query(`SET statement_timeout = ${QUERY_TIMEOUT_MS}`);
     const result = await client.query({ text: sql, values: params });
+    await client.query("COMMIT");
     const rows = result.rows as Record<string, unknown>[];
     const limited = rows.slice(0, MAX_ROWS);
     return { rows: limited, rowCount: result.rowCount ?? rows.length };
+  } catch (err) {
+    await client.query("ROLLBACK");
+    throw err;
   } finally {
     await client.query("SET statement_timeout = 0");
     client.release();
