@@ -4,3 +4,4 @@
 .env
 .env.local
 /tsconfig.tsbuildinfo
+docker-compose.override.yml
